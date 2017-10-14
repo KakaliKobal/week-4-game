@@ -1,0 +1,49 @@
+.container {
+	background: url(../images/vader2.jpeg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	color: black;
+	text-shadow: -1px 0 #feda4a, 0 1px #feda4a, 1px 0 #feda4a, 0 -1px #feda4a;
+	font-size: 20px;
+	font-family: 'Orbitron', sans-serif;
+}
+
+#status {
+	background-color: rgba(255, 255, 255, .5);
+}
+
+h1 {
+	font-size: 40px;
+}
+
+img {
+	width: 175px;
+	height: 200px;
+	border-radius: 10px;
+}
+
+.character {
+	border-style: double;
+	border-color: #feda4a;
+	border-width: 3px;
+	cursor: pointer;
+	background-color: white;
+	float: left;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+
+.character-image {
+	padding: 3px 16px;
+
+}
+
+.character-name {
+	text-align: center;
+}
+
+.character-health {
+	text-align: center;
+}

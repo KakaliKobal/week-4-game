@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Star Wars RPG</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="assets/css/reset.css"> -->
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Orbitron:700" rel="stylesheet">
+</head>
+<body class="container">
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<h1>Star Wars RPG!</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12" id="status">
+			<h2>Instructions:</h2>
+			<p>
+				Choose a character you want to fight with, all other characters will then be placed as enemies. Next you will need to choose which enemy to fight first. Click the attack button to attack your enemy. After your enemy is defeated you can select your next oponent. To win this game you will need to defeat all enemies before your hp hits 0. To restart for any reason, hit the restart button. 
+			</p>
+		</div>
+	</div>
+	<div id="character-section" class="row">
+		<div class="section-title">
+			<h3>Select Your Character</h3>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div id="selected-character-section" class="row">
+				<h3>Your Character</h3>
+				<div id="selected-character"></div>
+			</div>
+			<div id="available-enemies" class="row">
+				<h3>Enemies Available to Attack</h3>
+			</div>
+			<div class="row">
+				<h3>Fight Section</h3>
+			</div>
+		    <div class="row">
+		    	<h3 class='fight'>Fight Section</h3>
+		    </div>
+		    <div class="row attackRow">
+		    	<button class="btn btn-default attack">Attack</button>
+		    </div>
+		    <div class="row defender-row">
+		        <h3 class="defender">Defender</h3>
+		    </div>
+		    <p class='playerAttacks'></p>
+		    <p class='defenderAttacks'></p>
+		    <p class='lost won blink'></p>
+		    <div class="row restartRow">
+		     	<button id="button" class="btn btn-default clear" value='Refresh Page restart' onClick="window.location.reload()"><p>Restart</p></button>
+		    </div>
+
+		</div>
+		
+	</div>
+	
+	</div>
+	
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="assets/javascript/game.js"></script>
+
+</body>
+</html>
