@@ -3,6 +3,7 @@ var yourOpponents = [];
 var currentOppenent;
 var selectedCharacter;
 var counter = 0;
+var gameOver = false;
 
 var characters = {
         "Qui Gon Jinn": {
@@ -58,7 +59,7 @@ $(document).ready(function() {
 
         delete yourOpponents[name];
 
-        $("#actions").prepend("<p>You selected " + selectedCharacter.name + "!</p>");
+        writeAction("<p>You selected " + selectedCharacter.name + "!</p>");
 
         $("#character-section").hide();
         $("#selected-character-section").show();
@@ -76,7 +77,7 @@ $(document).ready(function() {
 
         delete yourOpponents[name];
 
-        $("#actions").prepend("<p>You selected " + currentOppenent.name + "!</p>");
+        writeAction("<p>You selected " + currentOppenent.name + "!</p>");
 
         renderCharacters(yourOpponents, '#available-enemies');
         renderCharacters(currentOppenent, '#current-defender');
@@ -84,7 +85,7 @@ $(document).ready(function() {
 
     $("#attack-button").on("click", function() {
 
-        if (!selectedCharacter) {
+        if (!selectedCharacter || gameOver) {
             return
         }
  
@@ -96,25 +97,39 @@ $(document).ready(function() {
 
         counter++;
 
-        currentOppenent.health -= counter * selectedCharacter.attack;
+        attack = counter * selectedCharacter.attack;
+        currentOppenent.health -= attack;
 
         renderCharacters(currentOppenent, "#current-defender");
 
-        $("#actions").prepend("<p>You attack " + currentOppenent.name +  "!</p>");
+        writeAction("<p>You attack " + attack +  "!</p>");
 
         if (currentOppenent.health < 1) {
             currentOppenent = null;
             $('#current-defender').hide();
+            if (jQuery.isEmptyObject(yourOpponents)){
+                gameOver = true;
+                writeAction("<p>All your opponents are dead, you WIN!.</p>");
+            } else {
+                writeAction("<p>Your opponent is dead! Select another.</p>");
+            }
             return
 
         } 
 
         selectedCharacter.health -= currentOppenent.counterAttack;
 
+        writeAction("<p>" + currentOppenent.name + " attacked you back with " + currentOppenent.counterAttack +  "!</p>");
+
+
         if (selectedCharacter.health < 1) {
             //Game over
+            gameOver = true;
+            $("#selected-character").hide();
+            writeAction("<p>You DIED! Game Over!</p>");
             return
         }
+
 
         renderCharacters(selectedCharacter, "#selected-character");
 
@@ -148,6 +163,12 @@ var renderCharacters = function(charObj, areaRender) {
 
 }
 
+function writeAction(msg) {
+    $("#actions").prepend(msg);
+    if ($("#actions > p").length > 7) {
+        $("#actions > p:last").remove();
+    }
+}
 
 
 
