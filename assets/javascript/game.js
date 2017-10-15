@@ -1,6 +1,8 @@
 var yourCharacter;
 var yourOpponents = [];
-var selectedCharacter = "";
+var currentOppenent;
+var selectedCharacter;
+var counter = 0;
 
 var characters = {
         "Qui Gon Jinn": {
@@ -44,28 +46,77 @@ var characters = {
 
 $(document).ready(function() {
    
-    
-    renderCharacters(characters, "#character-section");
+    // $("#available-enemies").hide();
+    renderCharacters(characters, "#character-choices");
 
-    var currentCharacter = characters[name];
-
-    $(document).on("click", ".character", function(){
+    $(document).on("click", "#character-choices > .character", function(){
         var name = $(this).attr("data-name");
-        console.log(name);
 
-        if (!currentCharacter) {
-            for (var key in characters) {
-                if (key !== name) {
-                    yourOpponents.push(characters[key]);
-                }
-            }
+        selectedCharacter = characters[name];
 
-            console.log(yourOpponents);
+        yourOpponents = characters;
 
-            $("#character-section").hide();
+        delete yourOpponents[name];
 
-            renderCharacters(currentCharacter, "#selected-character")
+        $("#actions").prepend("<p>You selected " + selectedCharacter.name + "!</p>");
+
+        $("#character-section").hide();
+        $("#selected-character-section").show();
+
+        renderCharacters(selectedCharacter, "#selected-character");
+        renderCharacters(yourOpponents, "#available-enemies");
+    });
+
+    $(document).on("click", "#available-enemies > .character", function() {
+        var name = $(this).attr("data-name");
+
+        if(currentOppenent) {return}
+
+        currentOppenent = yourOpponents[name];
+
+        delete yourOpponents[name];
+
+        $("#actions").prepend("<p>You selected " + currentOppenent.name + "!</p>");
+
+        renderCharacters(yourOpponents, '#available-enemies');
+        renderCharacters(currentOppenent, '#current-defender');
+    });
+
+    $("#attack-button").on("click", function() {
+
+        if (!selectedCharacter) {
+            return
         }
+ 
+        if (!currentOppenent){
+            alert("You have not selected an opponent");
+            return
+        }
+
+
+        counter++;
+
+        currentOppenent.health -= counter * selectedCharacter.attack;
+
+        renderCharacters(currentOppenent, "#current-defender");
+
+        $("#actions").prepend("<p>You attack " + currentOppenent.name +  "!</p>");
+
+        if (currentOppenent.health < 1) {
+            currentOppenent = null;
+            $('#current-defender').hide();
+            return
+
+        } 
+
+        selectedCharacter.health -= currentOppenent.counterAttack;
+
+        if (selectedCharacter.health < 1) {
+            //Game over
+            return
+        }
+
+        renderCharacters(selectedCharacter, "#selected-character");
 
     })
 
@@ -82,14 +133,16 @@ var renderOne = function(character, renderArea) {
 
 
 var renderCharacters = function(charObj, areaRender) {
-    if (areaRender === "#character-section") {
-        $(areaRender).empty();
+    $(areaRender).empty();
+    $(areaRender).show();
+
+    if (!charObj.name) {
         for (var key in charObj) {
             if (charObj.hasOwnProperty(key)) {
                 renderOne(charObj[key], areaRender);
             }
         }
-    } else if (areaRender == "#selected-character") {
+    } else {
         renderOne(charObj, areaRender);
     }
 
